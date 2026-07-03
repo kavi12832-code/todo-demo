@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>To-Do List</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f4f5f7;
+            margin: 0;
+            padding: 50px 20px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin: 0 0 20px;
+            text-align: center;
+            color: #333;
+        }
+
+        .add-form {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .add-form input[type="text"] {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .add-form input[type="text"]:focus {
+            border-color: #4a90d9;
+        }
+
+        .add-form button {
+            background: #4a90d9;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 18px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .add-form button:hover {
+            background: #3a7bc0;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px;
+            border-radius: 6px;
+            background: #f9f9f9;
+            margin-bottom: 8px;
+        }
+
+        li.completed span {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        li span {
+            font-size: 15px;
+        }
+
+        .actions a {
+            text-decoration: none;
+            margin-left: 10px;
+            font-size: 15px;
+        }
+
+        .actions .complete { color: #4caf50; }
+        .actions .delete { color: #e05252; }
+
+        .empty {
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>My To-Do List</h1>
+
+        <form method="post" class="add-form">
+            {% csrf_token %}
+            <input type="text" name="title" placeholder="Add a new task..." required>
+            <button type="submit">Add</button>
+        </form>
+
+        <ul>
+            {% for task in tasks %}
+                <li class="{% if task.completed %}completed{% endif %}">
+                    <span>{{ task.title }}</span>
+                    <span class="actions">
+                        <a class="complete" href="{% url 'task_complete' task.pk %}">✔</a>
+                        <a class="edit" href="{% url 'task_edit' task.pk %}">✏️</a>
+                        <a class="delete" href="{% url 'task_delete' task.pk %}">🗑</a>
+                    </span>
+                </li>
+            {% empty %}
+                <li class="empty">No tasks yet. Add one above!</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
