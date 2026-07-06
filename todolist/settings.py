@@ -1,3 +1,10 @@
+<<<<<<< HEAD
+=======
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+>>>>>>> 858527a637502464fa538dbbb5af160c12b632c5
 """
 Django settings for todolist project.
 
@@ -20,10 +27,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+<<<<<<< HEAD
 SECRET_KEY = 'django-insecure-lh21r1d$zz-0pz_mq1iko*7x2)v2yv-phhy42%p1^&zn@x&cul'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+=======
+SECRET_KEY = this is a command
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
+>>>>>>> 858527a637502464fa538dbbb5af160c12b632c5
 
 ALLOWED_HOSTS = []
 
